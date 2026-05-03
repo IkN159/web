@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0">
+        <h2 class="h3 mb-0"><i class="bi bi-plus-circle"></i> Добавить новость</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('add_news') }}">
+            {{ form.hidden_tag() }}
+            
+            <div class="mb-3">
+                {{ form.title.label(class="form-label fw-semibold") }}
+                {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else ""), placeholder="Введите заголовок") }}
+                {% for error in form.title.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.category.label(class="form-label fw-semibold") }}
+                {{ form.category(class="form-select" + (" is-invalid" if form.category.errors else "")) }}
+                {% for error in form.category.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.text.label(class="form-label fw-semibold") }}
+                {{ form.text(class="form-control" + (" is-invalid" if form.text.errors else ""), rows=8, placeholder="Текст новости...") }}
+                {% for error in form.text.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                {{ form.submit(class="btn btn-primary px-4") }}
+                <a href="{{ url_for('home_page') }}" class="btn btn-outline-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

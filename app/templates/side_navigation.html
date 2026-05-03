@@ -1,0 +1,26 @@
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-white border-0 pt-3 pb-0">
+        <h5 class="card-title mb-0">
+            <i class="bi bi-tags"></i> Категории
+        </h5>
+    </div>
+    <div class="card-body pt-2">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0 ps-0">
+                <a href="{{ url_for('home_page') }}" class="text-decoration-none">
+                    <i class="bi bi-grid-3x3-gap-fill"></i> Все новости
+                </a>
+            </li>
+            {% for cat in categories %}
+            <li class="list-group-item border-0 ps-0">
+                <a href="{{ url_for('category_news', id=cat.id) }}" class="text-decoration-none">
+                    <i class="bi bi-folder"></i> {{ cat.title }}
+                </a>
+                <span class="badge bg-secondary rounded-pill ms-2">{{ cat.news|length }}</span>
+            </li>
+            {% else %}
+            <li class="list-group-item border-0 ps-0 text-muted">Категории отсутствуют</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

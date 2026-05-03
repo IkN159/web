@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="display-5 fw-semibold">
+        <i class="bi bi-house-door"></i> Все новости
+    </h1>
+</div>
+
+{% for news in lst_news %}
+<div class="card card-news shadow-sm mb-4">
+    <div class="card-body">
+        <h2 class="h4 card-title">
+            <a href="{{ url_for('news_detail', id=news.id) }}" class="text-dark text-decoration-none">
+                {{ news.title }}
+            </a>
+        </h2>
+        <p class="card-text text-muted small mb-2">
+            <i class="bi bi-calendar3"></i> {% if news.created_date %}
+            {{ news.created_date.strftime('%d.%m.%Y %H:%M') }}
+        {% else %}
+            Дата не указана
+        {% endif %}
+        </p>
+        <p class="card-text">
+            {{ news.text[:200] }}{% if news.text|length > 200 %}...{% endif %}
+        </p>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <a href="{{ url_for('news_detail', id=news.id) }}" class="btn btn-sm btn-outline-primary">
+                Читать далее <i class="bi bi-arrow-right"></i>
+            </a>
+            <span class="text-muted small">
+                <i class="bi bi-folder"></i>
+                <a href="{{ url_for('category_news', id=news.category.id) }}" class="category-link">
+                    {{ news.category.title }}
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-secondary" role="alert">
+    <i class="bi bi-info-circle"></i> Новостей пока нет. Добавьте первую!
+</div>
+{% endfor %}
+{% endblock %}
